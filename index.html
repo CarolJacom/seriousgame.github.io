@@ -1,10 +1,25 @@
 <html>
 <head>
-    
-<script language=”javascript”>
-var objeto_coisa = document.getElementById(“coisa”);
-objeto_coisa.innerHTML = "https://zoom.us/pt-pt/meetings.html";
-</script>
+
+function getJSONP(url, success) {
+	var ud = '_' + +new Date, 
+		script = document.createElement('script'), 
+		head = document.getElementsByTagName('head')[0] 
+				|| document.documentElement; 
+				
+	window[ud] = function(data) {
+		head.removeChild(script); 
+		success && success(data); 
+	};
+
+	script.src = url.replace('callback=?', 'callback=' + ud); 
+	head.appendChild(script); 
+	
+} 
+
+getJSONP('https://zoom.us/pt-pt/meetings.html', function(data){ 
+	console.log(data);
+});
 
 <head>
 <body>
